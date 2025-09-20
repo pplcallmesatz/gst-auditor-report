@@ -1,4 +1,4 @@
-# GST Audit Exporter for WooCommerce (v1.1.0)
+# GST Audit Exporter for WooCommerce (v1.1.1)
 
 A comprehensive WooCommerce extension built to simplify **GST compliance and reporting** for Indian e-commerce businesses.
 
@@ -11,26 +11,17 @@ A comprehensive WooCommerce extension built to simplify **GST compliance and rep
 ## 🛠 Developed By
 
 **Satheesh Kumar S**  
-[LinkedIn](https://www.linkedin.com/in/pplcallmesatz/) | [Twitter](https://x.com/pplcallmesatz) | [Instagram](https://instagram.com/pplcallmesatz)
+[Github](https://github.com/pplcallmesatz/)
 
 ---
 
 ## 📦 Features
 
 - 📄 **Order-Wise GST Data Export**  
-  Export GST-compliant data for all orders in a selected date range.
-
 - 🧾 **HSN Code Management**  
-  Assign and manage HSN codes for your WooCommerce products.
-
 - 📊 **Excel Report Generator**  
-  Download ready-to-file Excel sheets for monthly/quarterly GST returns.
-
 - 🔍 **Detailed Tax Breakdown**  
-  Split reports into CGST, SGST, and IGST as per the buyer’s state.
-
 - 🗂️ **Filter Options**  
-  Filter by order status, date range, payment method, or customer state.
 
 ---
 
@@ -48,7 +39,7 @@ A comprehensive WooCommerce extension built to simplify **GST compliance and rep
 
 1. Select a **date range** and **order status**.
 2. Click on **Export to Excel**.
-3. Your report will be generated with fields like:
+3. Your report will include:
    - Order ID
    - Customer Name & State
    - Product Details
@@ -79,8 +70,8 @@ A comprehensive WooCommerce extension built to simplify **GST compliance and rep
 
 ## 🧑‍💻 Support & Feedback
 
-For feature requests, issues, or support:  
-📩 Email: `satheeshssk@icloud.com`
+📩 Email: `satheeshdesign@gmail.com`  
+☕ [Buy Me a Coffee](https://www.buymeacoffee.com/satheeshdesign)
 
 ---
 
@@ -91,37 +82,10 @@ If you find this tool useful, consider supporting me:
 
 ---
 
-
-
 ## 📜 License
 
-This plugin is released under the [MIT License](LICENSE).
-
-Copyright © 2025  
-Satheesh Kumar S
-
-Permission is hereby granted, free of charge, to any person obtaining a copy  
-of this software and associated documentation files (the "Software"), to deal  
-in the Software without restriction, including without limitation the rights  
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell  
-copies of the Software, and to permit persons to whom the Software is  
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in  
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR  
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,  
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE  
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER  
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  
-SOFTWARE.
+This plugin is released under the [GPLv2 or later License](https://www.gnu.org/licenses/gpl-2.0.html).
 
 ---
 
 ### 🇮🇳 Built with care in India
-
-
-
-
