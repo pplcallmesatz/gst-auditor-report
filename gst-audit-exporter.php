@@ -10,7 +10,7 @@ Author URI: https://github.com/pplcallmesatz/
 Website: https://github.com/pplcallmesatz/
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: gst-audit-exporter
+Text Domain: gst-audit-exporter-for-woocommerce
 
 Key Features:
 - Detailed GST Reports: Export WooCommerce order data with HSN codes, tax breakdowns, and all essential fields for GST returns.
@@ -84,7 +84,7 @@ class GST_Audit_Exporter {
 
     public function render_admin_page() {
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_die( esc_html( __( 'You do not have sufficient permissions to access this page.', 'gst-audit-exporter' ) ) );
+            wp_die( esc_html( __( 'You do not have sufficient permissions to access this page.', 'gst-audit-exporter-for-woocommerce' ) ) );
         }
         $tab = isset($_GET['tab']) ? sanitize_text_field(wp_unslash($_GET['tab'])) : 'report';
         echo '<div class="wrap"><h1>GST Audit Export</h1>';
@@ -99,7 +99,7 @@ class GST_Audit_Exporter {
             if (isset($_POST['gst_audit_month']) || isset($_POST['gst_audit_per_page'])) {
                 // @codingStandardsIgnoreLine WordPress.Security.ValidatedSanitizedInput.InputNotSanitized - Nonce verification handles sanitization internally
                 if (!isset($_POST['gst_audit_nonce']) || !wp_verify_nonce(wp_unslash($_POST['gst_audit_nonce']), 'gst_audit_filter')) {
-                    wp_die(esc_html(__('Security check failed. Please try again.', 'gst-audit-exporter')));
+                    wp_die(esc_html(__('Security check failed. Please try again.', 'gst-audit-exporter-for-woocommerce')));
                 }
             }
             $selected_month = isset($_POST['gst_audit_month']) ? sanitize_text_field(wp_unslash($_POST['gst_audit_month'])) : (isset($_GET['gst_audit_month']) ? sanitize_text_field(wp_unslash($_GET['gst_audit_month'])) : gmdate('Y-m'));
@@ -313,7 +313,7 @@ class GST_Audit_Exporter {
         if (isset($_POST['gst_audit_per_page'])) {
             // @codingStandardsIgnoreLine WordPress.Security.ValidatedSanitizedInput.InputNotSanitized - Nonce verification handles sanitization internally
             if (!isset($_POST['gst_audit_nonce']) || !wp_verify_nonce(wp_unslash($_POST['gst_audit_nonce']), 'gst_audit_filter')) {
-                wp_die(esc_html(__('Security check failed. Please try again.', 'gst-audit-exporter')));
+                wp_die(esc_html(__('Security check failed. Please try again.', 'gst-audit-exporter-for-woocommerce')));
             }
         }
         $per_page = isset($_POST['gst_audit_per_page']) ? max(10, intval(wp_unslash($_POST['gst_audit_per_page']))) : (isset($_GET['gst_audit_per_page']) ? max(10, intval(wp_unslash($_GET['gst_audit_per_page']))) : $default_per_page);
@@ -773,9 +773,9 @@ class GST_Audit_Exporter {
     public function add_hsn_code_field() {
         woocommerce_wp_text_input([
             'id' => 'hsn_code',
-            'label' => __('HSN Code', 'gst-audit-exporter'),
+            'label' => __('HSN Code', 'gst-audit-exporter-for-woocommerce'),
             'desc_tip' => true,
-            'description' => __('Enter the HSN code for GST reporting.', 'gst-audit-exporter'),
+            'description' => __('Enter the HSN code for GST reporting.', 'gst-audit-exporter-for-woocommerce'),
             'type' => 'text',
         ]);
     }
@@ -1518,7 +1518,7 @@ class GST_Audit_Exporter {
     public function save_mail_settings() {
         // @codingStandardsIgnoreLine WordPress.Security.ValidatedSanitizedInput.InputNotSanitized - Nonce verification handles sanitization internally
         if (!isset($_POST['gst_audit_mail_nonce']) || !wp_verify_nonce(wp_unslash($_POST['gst_audit_mail_nonce']), 'gst_audit_mail_settings')) {
-            wp_die(esc_html(__('Security check failed. Please try again.', 'gst-audit-exporter')));
+            wp_die(esc_html(__('Security check failed. Please try again.', 'gst-audit-exporter-for-woocommerce')));
         }
         
         $mail_enabled = isset($_POST['mail_enabled']) ? 'yes' : 'no';
@@ -1563,7 +1563,7 @@ class GST_Audit_Exporter {
     public function send_test_mail() {
         // @codingStandardsIgnoreLine WordPress.Security.ValidatedSanitizedInput.InputNotSanitized - Nonce verification handles sanitization internally
         if (!isset($_POST['gst_audit_mail_nonce']) || !wp_verify_nonce(wp_unslash($_POST['gst_audit_mail_nonce']), 'gst_audit_mail_settings')) {
-            wp_die(esc_html(__('Security check failed. Please try again.', 'gst-audit-exporter')));
+            wp_die(esc_html(__('Security check failed. Please try again.', 'gst-audit-exporter-for-woocommerce')));
         }
         
         $mail_recipient = get_option('gst_audit_mail_recipient', '');
@@ -1629,7 +1629,7 @@ class GST_Audit_Exporter {
     public function trigger_manual_email() {
         // @codingStandardsIgnoreLine WordPress.Security.ValidatedSanitizedInput.InputNotSanitized - Nonce verification handles sanitization internally
         if (!isset($_POST['gst_audit_mail_nonce']) || !wp_verify_nonce(wp_unslash($_POST['gst_audit_mail_nonce']), 'gst_audit_mail_settings')) {
-            wp_die(esc_html(__('Security check failed. Please try again.', 'gst-audit-exporter')));
+            wp_die(esc_html(__('Security check failed. Please try again.', 'gst-audit-exporter-for-woocommerce')));
         }
         
         $mail_enabled = get_option('gst_audit_mail_enabled', 'no');
@@ -2029,7 +2029,7 @@ class GST_Audit_Exporter {
     public function add_custom_cron_intervals($schedules) {
         $schedules['gst_audit_every_5_minutes'] = array(
             'interval' => 120, // 5 minutes in seconds
-            'display' => __('Every 5 Minutes', 'gst-audit-exporter')
+            'display' => __('Every 5 Minutes', 'gst-audit-exporter-for-woocommerce')
         );
         return $schedules;
     }
