@@ -5,7 +5,7 @@ Tags: gst, woocommerce, gst export, hsn code, tax
 Requires at least: 5.0  
 Tested up to: 6.8  
 Requires PHP: 7.2  
-Stable tag: 1.3.2  
+Stable tag: 1.4.0  
 License: GPLv2 or later  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,6 +20,7 @@ A comprehensive WooCommerce extension to simplify GST compliance and reporting f
 - Export GST-ready Excel reports
 - Detailed breakdown of CGST, SGST, IGST
 - Assign and manage HSN codes to products
+- PDF invoice template with HSN code support (gst-audit-report-hsn-pdf)
 - Filter by order status, customer state, date range
 - Works with all standard WooCommerce setups
 
@@ -53,6 +54,12 @@ Yes. The plugin identifies whether CGST/SGST or IGST applies based on the custom
 
 == Changelog ==
 
+= 1.4.0 =
+* Added PDF invoice template support
+* New template "gst-audit-report-hsn-pdf" available in WooCommerce > PDF Invoice > Choose a template
+* Automatic template installation on plugin activation
+* Template files can be customized in theme folder
+
 = 1.1.0 =
 * Added HSN code management
 * Improved filter options (state, payment, status)
@@ -60,6 +67,9 @@ Yes. The plugin identifies whether CGST/SGST or IGST applies based on the custom
 * Minor UI improvements
 
 == Upgrade Notice ==
+
+= 1.4.0 =
+Major update: Added PDF invoice template support. The new template "gst-audit-report-hsn-pdf" is automatically installed and can be selected in WooCommerce > PDF Invoice settings. Template files are installed in your theme folder for easy customization.
 
 = 1.1.0 =
 Recommended update with improved HSN code handling and performance.

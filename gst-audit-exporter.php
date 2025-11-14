@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: GST Audit Exporter for WooCommerce
-Description: GST Audit Exporter v1.3.2 – A comprehensive WooCommerce extension to simplify GST compliance and reporting for Indian e-commerce businesses. Developed by Satheesh Kumar S at Mallow Technologies Private Limited. Export detailed order data for GST filing, manage HSN codes, and generate Excel reports.
-Version: 1.3.2
+Description: GST Audit Exporter v1.4.0 – A comprehensive WooCommerce extension to simplify GST compliance and reporting for Indian e-commerce businesses. Developed by Satheesh Kumar S at Mallow Technologies Private Limited. Export detailed order data for GST filing, manage HSN codes, and generate Excel reports.
+Version: 1.4.0
 Requires at least: 5.0
 Requires PHP: 7.2
 Author: Satheesh Kumar S 
@@ -57,11 +57,118 @@ class GST_Audit_Exporter {
         add_action('init', [$this, 'aggressive_cron_check'], 20);
         // Add public URL endpoint for triggering emails
         add_action('init', [$this, 'handle_public_email_trigger']);
+        // Install PDF template on activation
+        add_action('admin_init', [$this, 'maybe_install_pdf_template']);
+    }
+
+    /**
+     * Install PDF template files on plugin activation
+     */
+    public static function install_pdf_template() {
+        // Get the active template folder (child theme > parent theme)
+        $template_base_path = ( function_exists( 'WC' ) && is_callable( array( WC(), 'template_path' ) ) ) 
+            ? WC()->template_path() 
+            : apply_filters( 'woocommerce_template_path', 'woocommerce/' );
+        $template_base_path = untrailingslashit( $template_base_path );
+        
+        // Priority: child theme > parent theme
+        $template_paths = array(
+            'child-theme' => get_stylesheet_directory() . "/{$template_base_path}/pdf/",
+            'theme'       => get_template_directory() . "/{$template_base_path}/pdf/",
+        );
+        
+        // Find the first existing template folder
+        $target_base_path = null;
+        foreach ( $template_paths as $source => $path ) {
+            if ( is_dir( $path ) ) {
+                $target_base_path = $path;
+                break;
+            }
+        }
+        
+        // If no template folder exists, use child theme (create it)
+        if ( ! $target_base_path ) {
+            $target_base_path = $template_paths['child-theme'];
+        }
+        
+        // Create folder structure: woocommerce/pdf/gst-audit-report-hsn-pdf/
+        $target_template_path = $target_base_path . 'gst-audit-report-hsn-pdf/';
+        
+        // Create directories if they don't exist
+        $dirs_to_create = array(
+            dirname( $target_base_path ), // woocommerce
+            $target_base_path, // woocommerce/pdf
+            $target_template_path, // woocommerce/pdf/gst-audit-report-hsn-pdf
+        );
+        
+        foreach ( $dirs_to_create as $dir ) {
+            if ( ! is_dir( $dir ) ) {
+                wp_mkdir_p( $dir );
+            }
+        }
+        
+        // Source files from plugin's templates folder
+        $source_template_path = plugin_dir_path( __FILE__ ) . 'templates/';
+        
+        // Files to copy
+        $files_to_copy = array(
+            'invoice.php',
+            'style.css',
+            'template-functions.php',
+            'packing-slip.php',
+            'html-document-wrapper.php',
+        );
+        
+        // Copy files from plugin templates to theme template folder
+        foreach ( $files_to_copy as $file ) {
+            $source_file = $source_template_path . $file;
+            $target_file = $target_template_path . $file;
+            
+            if ( file_exists( $source_file ) ) {
+                copy( $source_file, $target_file );
+            }
+        }
+        
+        // Store installation flag
+        update_option( 'gst_audit_pdf_template_installed', true );
+        update_option( 'gst_audit_pdf_template_path', $target_template_path );
+    }
+
+    /**
+     * Check if template needs to be installed
+     */
+    public function maybe_install_pdf_template() {
+        // Only run on admin pages and if template not already installed
+        if ( ! is_admin() ) {
+            return;
+        }
+        
+        $template_installed = get_option( 'gst_audit_pdf_template_installed', false );
+        
+        // Check if template folder exists
+        $template_path = get_option( 'gst_audit_pdf_template_path', '' );
+        if ( $template_path && is_dir( $template_path ) ) {
+            // Check if all required files exist
+            $required_files = array( 'invoice.php', 'style.css', 'template-functions.php', 'packing-slip.php', 'html-document-wrapper.php' );
+            $all_files_exist = true;
+            foreach ( $required_files as $file ) {
+                if ( ! file_exists( $template_path . $file ) ) {
+                    $all_files_exist = false;
+                    break;
+                }
+            }
+            if ( $all_files_exist ) {
+                return; // Template is already installed
+            }
+        }
+        
+        // Install template if not installed or files are missing
+        self::install_pdf_template();
     }
 
     public function enqueue_admin_assets($hook) {
         if ($hook !== 'toplevel_page_gst-audit-export') return;
-        wp_enqueue_script('gst-audit-exporter-js', plugins_url('gst-audit-exporter.js', __FILE__), ['jquery'], '1.3.2', true);
+        wp_enqueue_script('gst-audit-exporter-js', plugins_url('gst-audit-exporter.js', __FILE__), ['jquery'], '1.4.0', true);
         wp_localize_script('gst-audit-exporter-js', 'gst_audit_export', [
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('gst_audit_export_excel'),
@@ -2150,5 +2257,11 @@ class GST_Audit_Exporter {
         }
     }
 }
+
+// Activation hook
+function gst_audit_exporter_activate() {
+    GST_Audit_Exporter::install_pdf_template();
+}
+register_activation_hook( __FILE__, 'gst_audit_exporter_activate' );
 
 new GST_Audit_Exporter(); 
