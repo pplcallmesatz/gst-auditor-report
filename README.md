@@ -1,4 +1,4 @@
-# GST Audit Exporter for WooCommerce (v1.3.1)
+# GST Audit Exporter for WooCommerce (v1.4.0)
 
 A comprehensive WooCommerce extension built to simplify **GST compliance and reporting** for Indian e-commerce businesses. This powerful plugin provides automated GST reporting, HSN code management, and seamless integration with accounting workflows.
 
