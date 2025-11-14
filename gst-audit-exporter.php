@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: GST Audit Exporter for WooCommerce
-Description: GST Audit Exporter v1.3.1 – A comprehensive WooCommerce extension to simplify GST compliance and reporting for Indian e-commerce businesses. Developed by Satheesh Kumar S at Mallow Technologies Private Limited. Export detailed order data for GST filing, manage HSN codes, and generate Excel reports.
-Version: 1.3.1
+Description: GST Audit Exporter v1.3.2 – A comprehensive WooCommerce extension to simplify GST compliance and reporting for Indian e-commerce businesses. Developed by Satheesh Kumar S at Mallow Technologies Private Limited. Export detailed order data for GST filing, manage HSN codes, and generate Excel reports.
+Version: 1.3.2
 Requires at least: 5.0
 Requires PHP: 7.2
 Author: Satheesh Kumar S 
@@ -61,7 +61,7 @@ class GST_Audit_Exporter {
 
     public function enqueue_admin_assets($hook) {
         if ($hook !== 'toplevel_page_gst-audit-export') return;
-        wp_enqueue_script('gst-audit-exporter-js', plugins_url('gst-audit-exporter.js', __FILE__), ['jquery'], '1.3.0', true);
+        wp_enqueue_script('gst-audit-exporter-js', plugins_url('gst-audit-exporter.js', __FILE__), ['jquery'], '1.3.2', true);
         wp_localize_script('gst-audit-exporter-js', 'gst_audit_export', [
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('gst_audit_export_excel'),
